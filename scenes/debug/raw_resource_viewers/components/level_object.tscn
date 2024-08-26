@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmgwaarqjw511"]
+
+[ext_resource type="Script" path="res://scenes/debug/raw_resource_viewers/components/level_object.gd" id="1_36606"]
+[ext_resource type="Texture2D" uid="uid://cseyojwy6622n" path="res://art/square_16_16.png" id="1_jnspg"]
+
+[node name="level_object" type="Node2D"]
+script = ExtResource("1_36606")
+
+[node name="bg_sprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_jnspg")
+centered = false
+
+[node name="fg_sprite" type="Sprite2D" parent="."]
+centered = false

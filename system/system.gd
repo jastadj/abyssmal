@@ -10,7 +10,7 @@ enum TILE_TYPES{SOLID, OPEN, DIAG_OPEN_SE, DIAG_OPEN_SW, DIAG_OPEN_NE, DIAG_OPEN
 var image_type = load("res://system/data_types/image.gd").new()
 var font_type = load("res://system/data_types/font.gd").new()
 
-var uw1_data = {"name":"uw1","path":"./uw_data", "loaded":false, "raws":{} ,"palettes":{}, "images":{}, "fonts":{}}
+var uw1_data = {"name":"uw1","path":"./uw_data", "loaded":false, "raws":{} ,"palettes":{}, "images":{}, "textures":{}, "fonts":{}}
 var cur_data = uw1_data
 
 signal loading_status
@@ -74,13 +74,19 @@ func generate_resources_from_raws(data:Dictionary):
 	for rawauxpalette in data["raws"]["palettes"]["aux"]:
 		data["palettes"]["aux"].push_back(generate_aux_palette(rawauxpalette, data["palettes"]["main"][0]))
 	
-	# generate images
+	# generate images & textures
 	for imagekey in data["raws"]["images"].keys():
 		data["images"][imagekey] = []
+		data["textures"][imagekey] = []
 		for entry in data["raws"]["images"][imagekey]:
-			var pal = data["palettes"]["main"][entry["palette"]]
-			var auxpal = data["palettes"]["aux"][entry["aux_palette"]]
-			data["images"][imagekey].push_back(generate_image_from_image_entry(entry, pal, auxpal))
+			if entry != null:
+				var pal = data["palettes"]["main"][entry["palette"]]
+				var auxpal = data["palettes"]["aux"][entry["aux_palette"]]
+				data["images"][imagekey].push_back(generate_image_from_image_entry(entry, pal, auxpal))
+				data["textures"][imagekey].push_back(ImageTexture.create_from_image(data["images"][imagekey].back()))
+			else:
+				data["images"][imagekey].push_back(null)
+				data["textures"][imagekey].push_back(null)
 	
 	# generate strings (dictionary copy)
 	data["strings"] = data["raws"]["strings"]

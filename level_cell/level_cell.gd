@@ -211,7 +211,7 @@ func create_floor_mesh() -> MeshInstance3D:
 	var floor_mesh_instance = MeshInstance3D.new()
 	floor_mesh_instance.name = "floor"
 	floor_mesh_instance.mesh = floor_mesh
-	floor_mesh_instance.position.y = floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0)
+	floor_mesh_instance.position = Vector3(System.TILE_SIZE/2, floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0), System.TILE_SIZE/2)
 	return floor_mesh_instance
 
 func create_wall_meshes() -> Array:
@@ -470,7 +470,7 @@ func create_wall_meshes() -> Array:
 		var wall_mesh_instance = MeshInstance3D.new()
 		wall_mesh_instance.name = "wall"
 		wall_mesh_instance.mesh = wall_mesh
-		wall_mesh_instance.position.y = floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0)
+		wall_mesh_instance.position = Vector3(System.TILE_SIZE/2, floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0), System.TILE_SIZE/2)
 		
 		# rotate mesh
 		wall_mesh_instance.rotation_degrees.y = y_rotation
@@ -539,7 +539,7 @@ func create_wall_meshes() -> Array:
 		var wall_mesh_instance = MeshInstance3D.new()
 		wall_mesh_instance.name = "wall"
 		wall_mesh_instance.mesh = wall_mesh
-		wall_mesh_instance.position.y = floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0)
+		wall_mesh_instance.position = Vector3(System.TILE_SIZE/2, floor((float(height)/8.0)) * (float(System.TILE_SIZE)/4.0), System.TILE_SIZE/2)
 
 		# add to wall mesh list
 		wall_meshes.append(wall_mesh_instance)
@@ -590,6 +590,6 @@ func create_ceiling_mesh() -> MeshInstance3D:
 	var ceil_mesh_instance = MeshInstance3D.new()
 	ceil_mesh_instance.name = "ceiling"
 	ceil_mesh_instance.mesh = ceil_mesh
-	ceil_mesh_instance.position.y = floor((float(System.MAX_HEIGHT)/8.0)) * (float(System.TILE_SIZE)/4.0)
+	ceil_mesh_instance.position = Vector3( System.TILE_SIZE/2, floor((float(System.MAX_HEIGHT)/8.0)) * (float(System.TILE_SIZE)/4.0), System.TILE_SIZE/2)
 	ceil_mesh_instance.rotation_degrees.x = 180
 	return ceil_mesh_instance

@@ -1,28 +1,35 @@
 extends Node3D
 
+@onready var tiles = $tiles
+@onready var objects = $objects
+
+var level = null
+
+var palette
+var aux_palettes = []
+
+var object_textures = []
 var floor_textures = []
 var wall_textures = []
 #$tiles/floor/Plane.get_active_material(0).set_shader_parameter("img", ImageTexture.create_from_image(System.cur_data["images"]["floor_32"][0]) )
 
 func _ready():
 	
-	# main palette
-	var palette = System.generate_palette(System.cur_data["raws"]["palettes"]["main"][0])
-	
-	# init floor textures
-	for entry in System.cur_data["raws"]["images"]["floor_32"]:
-		floor_textures.push_back(ImageTexture.create_from_image(System.generate_image_from_image_entry(entry, palette, null)))
-	
-	# init wall textures
-	for entry in System.cur_data["raws"]["images"]["walls_64"]:
-		wall_textures.push_back(ImageTexture.create_from_image(System.generate_image_from_image_entry(entry, palette, null)))
+	# get references
+	palette = System.cur_data["palettes"]["main"][0]
+	aux_palettes = System.cur_data["palettes"]["aux"]
+	floor_textures = System.cur_data["textures"]["floor_32"]
+	wall_textures = System.cur_data["textures"]["walls_64"]
+	object_textures = System.cur_data["textures"]["objects"]
 	
 	#testing
 	#$floor/Plane.get_active_material(0).set_shader_parameter("img", ImageTexture.create_from_image(System.cur_data["images"]["floor_32"][0]) )
 	
-func load_level(level:Dictionary):
+func load_level(tgt_level:Dictionary):
 		
 	clear_level()
+	
+	level = tgt_level
 	
 	#print(level.keys())
 	#print(level["textures"].keys())
@@ -43,7 +50,7 @@ func load_level(level:Dictionary):
 			
 			new_nodex.name = str("x_",x)
 			new_nodey.add_child(new_nodex)
-			new_nodex.position = Vector3(x*System.TILE_SIZE, 0, (y-level["length"])*System.TILE_SIZE)
+			new_nodex.position = Vector3(x*System.TILE_SIZE, 0, y*System.TILE_SIZE)
 			
 			# get references to adjacent cells
 			if(x != 0):
@@ -58,7 +65,24 @@ func load_level(level:Dictionary):
 				north_cell.south = new_nodex
 							
 			new_nodex.set_cell(level["tiles"][y][x]["type"], level["tiles"][y][x]["height"], floor_textures[floor_texture_index], wall_textures[wall_texture_index], floor_textures[ceiling_texture_index])
-			
+	
+	for object in level["objects"]:
+		if object["in_map"]:
+			add_object(object)
 	
 func clear_level():
-	pass
+	
+	for child in tiles.get_children():
+		tiles.remove_child(child)
+		child.queue_free()
+		
+	for child in objects.get_children():
+		objects.remove_child(child)
+		child.queue_free()
+
+func add_object(obj):
+	if object_textures[obj["id"]] != null:
+		var new_obj = preload("res://scenes/game/level/object/object.tscn").instantiate()
+		new_obj.set_object(obj)
+		objects.add_child(new_obj)
+		

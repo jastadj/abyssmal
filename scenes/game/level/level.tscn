@@ -9,6 +9,8 @@ script = ExtResource("1_d0uj5")
 
 [node name="tiles" type="Node3D" parent="."]
 
+[node name="objects" type="Node3D" parent="."]
+
 [node name="level_cell" parent="." instance=ExtResource("2_m24ur")]
 
 [node name="player" parent="." instance=ExtResource("3_yo1kv")]

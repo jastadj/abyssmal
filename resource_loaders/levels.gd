@@ -46,8 +46,10 @@ static func load_levels_file(filename:String):
 				# data 2 - wall texture and object list info
 				var wall_texture_index = (data2 & 0x3f)
 				var object_index_offset = (data2 & 0xffc0) >> 6
-				var tile = {"x":x, "y":y, "type":tile_type, "height":tile_height, "floor":floor_texture_index, "wall":wall_texture_index,"flag_no_magic":flag_no_magic, "flag_door":flag_door, "object_offset":object_index_offset }
+				# inverting y axis
+				var tile = {"x":x, "y":level_length - 1 - y, "type":tile_type, "height":tile_height, "floor":floor_texture_index, "wall":wall_texture_index,"flag_no_magic":flag_no_magic, "flag_door":flag_door, "object_offset":object_index_offset}
 				tilemap[y].push_back(tile)
+		# inverting y axis
 		tilemap.reverse()
 		levels[level_num]["tiles"] = tilemap
 	
@@ -73,8 +75,6 @@ static func load_levels_file(filename:String):
 		for free_object_index in range(0,768):
 			objects[tfile.get_16()] = null
 		
-		levels[level_num]["objects"] = objects
-		
 		# for each tile, walk through the object linked list
 		# and adjust the tile position values to global position
 		for tile_y in tilemap:
@@ -84,12 +84,16 @@ static func load_levels_file(filename:String):
 					#print("tile:(", tile["x"], ",", tile["y"], ") object id:", object["id"], " (", object["x"], ",", object["y"], ",", object["z"], ")")
 					object["x"] += tile["x"]*8
 					object["y"] += tile["y"]*8
+					object["in_map"] = true
 					object = objects[object["next_object"]]
 		
 		# delete null objects
-		for i in range(objects.size()-1, -1):
-			if(objects[i] == null):
+		for i in range(objects.size()-1, -1, -1):
+			if objects[i] == null:
 				objects.remove_at(i)
+		
+		# set the level objects
+		levels[level_num]["objects"] = objects
 		
 	# read anim info block
 	for level_num in range(0, level_count):			
@@ -110,7 +114,7 @@ static func load_levels_file(filename:String):
 			var x = tfile.get_8()
 			var y = tfile.get_8()
 			anim_entry["x"] = x
-			anim_entry["y"] = y
+			anim_entry["y"] = 7 - y # inverting y axis
 			anim_info.push_back(anim_entry)
 		levels[level_num]["anims"] = anim_info
 	
@@ -178,13 +182,14 @@ static func _read_object_info(tfile:FileAccess):
 	object["texture_index"] = texture_index
 	object["z"] = z
 	object["x"] = x
-	object["y"] = y
+	object["y"] = 7 - y # invert y axis
 	object["angle"] = angle
 	object["quality"] = quality
 	object["next_object"] = next_object
 	object["special1"] = special1
 	object["special2"] = special2
 	object["npc"] = null
+	object["in_map"] = false # gets set to true if part of tile's object linked list
 	return object
 	
 static func _read_npc_info(tfile:FileAccess):
@@ -231,7 +236,7 @@ static func _read_npc_info(tfile:FileAccess):
 	var data4 = tfile.get_16()
 	var home_y = (data4 & 0x3f0 ) >> 4
 	var home_x = (data4 & 0xfc00) >> 10
-	npc["home_y"] = home_y
+	npc["home_y"] = 64 - 1 - home_y
 	npc["home_x"] = home_x
 	# other bits?
 	

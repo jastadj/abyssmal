@@ -49,10 +49,11 @@ static func load_image_file(filename:String, palette:int):
 	# get image at offsets
 	for i in range(0, offsets.size()):
 		
-		# ignore null records
+		# if null record, add null entry
 		if (i > 0):
-			if (offsets[i] == offsets[i-1]): continue
-			elif (offsets[i] >= tfile.get_length()): continue
+			if (offsets[i] == offsets[i-1]) or (offsets[i] >= tfile.get_length()):
+				image_entries.append(null)
+				continue
 		
 		# seek to offset
 		tfile.seek(offsets[i])
@@ -112,6 +113,7 @@ static func load_image_file(filename:String, palette:int):
 		else:
 			printerr("Error loading graphics file ", filename, " at offset ", offsets[i], " : unrecognized image type ", image_type)
 			return false
+		
 		# done
 		image_entry["data"] = pixel_data
 		image_entries.append(image_entry)

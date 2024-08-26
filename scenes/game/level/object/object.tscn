@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://mdbjj8ptjlyl"]
+
+[ext_resource type="Script" path="res://scenes/game/level/object/object.gd" id="1_3oxnr"]
+[ext_resource type="Texture2D" uid="uid://cseyojwy6622n" path="res://art/square_16_16.png" id="2_q6e8w"]
+
+[node name="object" type="Node3D"]
+script = ExtResource("1_3oxnr")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 2
+texture_filter = 0
+texture = ExtResource("2_q6e8w")

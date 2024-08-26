@@ -6,11 +6,17 @@ extends Control
 
 var cur_level
 var palette
+var aux_palettes = []
 var floor_textures = []
+var object_textures = []
+
 @onready var tile_size = $square.texture.get_size()
-@onready var tiles = $tiles
-@onready var objects = $objects
+@onready var level = $level
+@onready var tiles = $level/tiles
+@onready var objects = $level/objects
+
 var tile_cursor
+var subtile_cursor
 var tile_shader = load("res://scenes/debug/raw_resource_viewers/components/level_tile.gdshader")
 
 var rmb_clicked_at = Vector2(0,0)
@@ -18,13 +24,25 @@ var tiles_clicked_position
 var panning = false
 
 func _ready():
-	
+		
 	# init palette0
 	palette = System.generate_palette(System.cur_data["raws"]["palettes"]["main"][0])
+		
+	# generate aux palettes
+	for rawauxpalette in System.cur_data["raws"]["palettes"]["aux"]:
+		aux_palettes.push_back(System.generate_aux_palette(rawauxpalette, palette))
 	
 	# init floor textures
 	for entry in System.cur_data["raws"]["images"]["floor_16"]:
 		floor_textures.push_back(System.generate_image_from_image_entry(entry, palette, null))
+	
+	# init object textures
+	for entry in System.cur_data["raws"]["images"]["objects"]:
+		if entry != null:
+			var auxpal = aux_palettes[entry["aux_palette"]]
+			object_textures.push_back(System.generate_image_from_image_entry(entry, palette, auxpal))
+		else:
+			object_textures.push_back(null)
 	
 	level_selector.max_value = System.cur_data["raws"]["levels"].size()
 	level_selector.min_value = 1
@@ -35,16 +53,26 @@ func _ready():
 	tile_cursor.modulate = Color(0,1,0,0.25)
 	add_child(tile_cursor)
 	
+	# create subtile cursor
+	subtile_cursor = $square.duplicate()
+	subtile_cursor.visible = true
+	subtile_cursor.modulate = Color(1, 1, 0, 0.25)
+	add_child(subtile_cursor)
+	
 func _process(_delta):
 	
-	var tilescale = tiles.scale
-	var mouse_pos = (get_global_mouse_position() - tiles.position)
+	var mouse_pos = (get_global_mouse_position() - level.position)
+	var mouse_pos_sub = Vector2( int((mouse_pos.x)/( (tile_size.x/8.0)*level.scale.x)), int(mouse_pos.y/((tile_size.y/8.0)*level.scale.y)))
+	mouse_pos = Vector2( int((mouse_pos.x)/(tile_size.x*level.scale.x)), int(mouse_pos.y/(tile_size.y*level.scale.y)))
 	
-	mouse_pos = Vector2( int((mouse_pos.x)/(tile_size.x*tilescale.x)), int(mouse_pos.y/(tile_size.y*tilescale.y)))
-	tile_cursor.position = (mouse_pos*tile_size*tilescale) + tiles.position
-	tile_cursor.scale = tiles.scale
 	
-	$LabelCursorPos.text = str(mouse_pos.x,",",cur_level["length"] - mouse_pos.y)
+	tile_cursor.position = (mouse_pos*(tile_size)*level.scale) + level.position
+	tile_cursor.scale = level.scale
+	
+	subtile_cursor.position = (mouse_pos_sub*(tile_size/8.0)*level.scale) + level.position
+	subtile_cursor.scale = level.scale * 0.125
+	
+	$LabelCursorPos.text = str(mouse_pos.x,",",cur_level["length"] - mouse_pos.y, " - Zoom:", level.scale)
 
 func _input(event):
 	
@@ -53,35 +81,44 @@ func _input(event):
 	
 	if event is InputEventMouseButton:
 		if event.pressed:
+			
+			# Panning with RMB
 			if event.button_index == MOUSE_BUTTON_RIGHT:
 				rmb_clicked_at = get_global_mouse_position()
-				tiles_clicked_position = tiles.position
+				tiles_clicked_position = level.position
 				panning = true
+			
+			# Zoom In with Mouse Wheel Up
 			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				var mouse_pos = get_global_mouse_position()
-				tiles.scale = tiles.scale * 2
-				tiles.position += (tiles.position - mouse_pos)
+				level.scale = level.scale * 2
+				level.position += (level.position - mouse_pos)
+			
+			# Zoom Out with Mouse Wheel Down
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				var mouse_pos = get_global_mouse_position()
-				tiles.scale = tiles.scale / 2
-				tiles.position -= (tiles.position - mouse_pos)/2
+				level.scale = level.scale / 2
+				level.position -= (level.position - mouse_pos)/2
 		else:
 			if event.button_index == MOUSE_BUTTON_RIGHT:
 				panning = false
 	elif event is InputEventMouseMotion:
 		if panning:
-			tiles.position = tiles_clicked_position + get_global_mouse_position() - rmb_clicked_at
+			level.position = tiles_clicked_position + get_global_mouse_position() - rmb_clicked_at
 
 func _select_level(level_num):
 	cur_level = System.cur_data["raws"]["levels"][level_num]
 	label_width.text = str("Width:", cur_level["tiles"][0].size())
 	label_length.text = str("Length:", cur_level["tiles"].size())
 	
-	_update_tiles()
+	_update_level()
 	
-func _update_tiles():
+func _update_level():
+	
 	_clear_level()
-	tiles.position = Vector2(0,0)
+	
+	# add tiles
+	level.position = Vector2(0,0)
 	for y in range(0, cur_level["length"]):
 		for x in range(0, cur_level["width"]):
 			var newtile = $square.duplicate()
@@ -93,6 +130,24 @@ func _update_tiles():
 			newtile.material.set_shader_parameter("tile_type", cur_level["tiles"][y][x]["type"])
 			newtile.texture = ImageTexture.create_from_image(floor_textures[floor_index])
 			tiles.add_child(newtile)
+			
+	# add objects
+	objects.position = Vector2(0,0)
+	for object in cur_level["objects"]:
+		if object["in_map"]:
+			if object_textures[object["id"]] != null:
+				
+				#var sprite = Sprite2D.new()
+				#sprite.texture = ImageTexture.create_from_image(object_textures[object["id"]])
+				#sprite.position = Vector2( (object["x"]+0.5)/8, object["y"]/8) * tile_size
+				#sprite.scale = Vector2(0.25,0.25)
+				#objects.add_child(sprite)
+				
+				var obj = preload("res://scenes/debug/raw_resource_viewers/components/level_object.tscn").instantiate()
+				obj.position = Vector2( (object["x"])/8, object["y"]/8) * tile_size
+				obj.scale = Vector2(0.5 * 0.125, 0.5 * 0.125)
+				obj.set_object(object, object_textures)
+				objects.add_child(obj)
 	
 func _clear_level():
 	for child in tiles.get_children():
@@ -103,10 +158,8 @@ func _clear_level():
 		objects.remove_child(child)
 		child.queue_free()
 
-
 func _on_visibility_changed():
 	if(visible): _select_level(level_selector.value-1)
-
 
 func _on_spinbox_level_value_changed(value):
 	_select_level(level_selector.value-1)

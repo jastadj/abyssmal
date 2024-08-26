@@ -55,6 +55,11 @@ func _enable_slider(slider:Slider,enabled:bool):
 
 func _reset_palette_sliders():
 	var cur_image = System.cur_data["raws"]["images"][image_set][image_slider.value]
+	if cur_image == null:
+		_enable_slider(aux_pal_slider, false)
+		_enable_slider(pal_slider, false)
+		return
+		
 	match(int(cur_image["type"])):
 		int(System.IMAGE_FORMAT.FMT_8BIT):
 			_enable_slider(aux_pal_slider, false)
@@ -98,11 +103,15 @@ func draw_image():
 	pal_label.text = str("Palette[", pal_val, "]:")
 	aux_label.text = str("Aux Palette[", aux_pal_val, "]:")
 	var cur_image = System.cur_data["raws"]["images"][image_set][image_slider.value]
-	image_info.text = str("Type:", cur_image["type"])
-	var newimage = System.generate_image_from_image_entry(cur_image, palettes[pal_val], aux_palettes[aux_pal_val])
-	image.texture = ImageTexture.create_from_image(newimage)
-	image.scale = Vector2(image_scale,image_scale)
-	_update_shader_params()
+	
+	if cur_image != null:
+		image_info.text = str("Type:", cur_image["type"])
+		var newimage = System.generate_image_from_image_entry(cur_image, palettes[pal_val], aux_palettes[aux_pal_val])
+		image.texture = ImageTexture.create_from_image(newimage)
+		image.scale = Vector2(image_scale,image_scale)
+		_update_shader_params()
+	else:
+		image.texture = null
 			
 
 
