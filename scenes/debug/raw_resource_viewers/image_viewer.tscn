@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://hlp4kvdep5wg"]
 
-[ext_resource type="Script" path="res://scenes/debug/raw_resource_viewers/image_viewer.gd" id="1_33yab"]
-[ext_resource type="PackedScene" path="res://scenes/debug/raw_resource_viewers/components/images.tscn" id="2_oopxp"]
-[ext_resource type="PackedScene" path="res://scenes/debug/raw_resource_viewers/components/palettes.tscn" id="3_oa8p2"]
-[ext_resource type="PackedScene" path="res://scenes/debug/raw_resource_viewers/components/aux_palettes.tscn" id="4_edd75"]
+[ext_resource type="Script" uid="uid://c03fclgem0lw" path="res://scenes/debug/raw_resource_viewers/image_viewer.gd" id="1_33yab"]
+[ext_resource type="PackedScene" uid="uid://qp1dg4gae1st" path="res://scenes/debug/raw_resource_viewers/components/images.tscn" id="2_oopxp"]
+[ext_resource type="PackedScene" uid="uid://ghyubtmunp1r" path="res://scenes/debug/raw_resource_viewers/components/palettes.tscn" id="3_oa8p2"]
+[ext_resource type="PackedScene" uid="uid://bj5w6h8smbcg3" path="res://scenes/debug/raw_resource_viewers/components/aux_palettes.tscn" id="4_edd75"]
 
 [node name="image_viewer" type="Control"]
 layout_mode = 3

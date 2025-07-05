@@ -70,16 +70,19 @@ static func load_levels_file(filename:String):
 		# read free object lists and set object index to null (free slot)
 		# the npc free is list only 254 entries (-2 for 0=null, 1=avatar)
 		for free_npc_index in range(0,254):
-			objects[tfile.get_16()] = null
+			#objects[tfile.get_16()] = null
+			pass
 		# read free list for objects
 		for free_object_index in range(0,768):
-			objects[tfile.get_16()] = null
+			#objects[tfile.get_16()] = null
+			pass
 		
 		# for each tile, walk through the object linked list
 		# and adjust the tile position values to global position
 		for tile_y in tilemap:
 			for tile in tile_y:
 				var object = objects[tile["object_offset"]]
+				
 				while object != null and object != objects[0]:
 					#print("tile:(", tile["x"], ",", tile["y"], ") object id:", object["id"], " (", object["x"], ",", object["y"], ",", object["z"], ")")
 					object["x"] += tile["x"]*8

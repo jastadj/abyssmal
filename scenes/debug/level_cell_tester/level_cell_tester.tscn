@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbpn3vmuh0ehg"]
 
-[ext_resource type="Script" path="res://scenes/debug/level_cell_tester/level_cell_tester.gd" id="1_x8w0r"]
-[ext_resource type="Script" path="res://tools/flylook.gd" id="2_v5vq0"]
+[ext_resource type="Script" uid="uid://b2hspuhhvftjr" path="res://scenes/debug/level_cell_tester/level_cell_tester.gd" id="1_x8w0r"]
+[ext_resource type="Script" uid="uid://2d3etjb2742u" path="res://tools/flylook.gd" id="2_v5vq0"]
 [ext_resource type="PackedScene" uid="uid://ci30vx52kmmox" path="res://level_cell/level_cell.tscn" id="2_xqahd"]
 
 [node name="level_cell_tester" type="Node3D"]

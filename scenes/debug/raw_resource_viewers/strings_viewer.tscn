@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dguwqqykcrr1a"]
 
-[ext_resource type="Script" path="res://scenes/debug/raw_resource_viewers/strings_viewer.gd" id="1_7bfng"]
+[ext_resource type="Script" uid="uid://djyu1y6ugbryp" path="res://scenes/debug/raw_resource_viewers/strings_viewer.gd" id="1_7bfng"]
 
 [node name="strings_viewer" type="Control"]
 layout_mode = 3

@@ -12,3 +12,5 @@ func set_object(tgt_object, object_textures):
 		var img_scale = Vector2(bg_size.size.x / img.get_width(), bg_size.size.y / img.get_height())
 		$fg_sprite.texture = ImageTexture.create_from_image(img)
 		$fg_sprite.scale = img_scale * 2
+	
+	

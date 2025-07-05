@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://d3sot00bhebfj"]
 
-[ext_resource type="Script" path="res://scenes/debug/raw_resource_viewers/font_viewer.gd" id="1_2q12c"]
+[ext_resource type="Script" uid="uid://0cc5835yh5i" path="res://scenes/debug/raw_resource_viewers/font_viewer.gd" id="1_2q12c"]
 
 [node name="font_viewer" type="Control"]
 layout_mode = 3
