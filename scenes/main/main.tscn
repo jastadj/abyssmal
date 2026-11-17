@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b37mgya11iqom"]
+
+[ext_resource type="PackedScene" uid="uid://bmh54sf2ok2nr" path="res://ui/common/pathselector.tscn" id="1_hyk8p"]
+
+[node name="main" type="Node2D" unique_id=178172233]
+
+[node name="HBoxContainer" parent="." unique_id=14571287 instance=ExtResource("1_hyk8p")]
+offset_left = 157.0
+offset_top = 148.0
+offset_right = 886.0
+offset_bottom = 179.0
+
+[node name="HBoxContainer2" parent="." unique_id=113252768 instance=ExtResource("1_hyk8p")]
+offset_left = 153.0
+offset_top = 295.0
+offset_right = 882.0
+offset_bottom = 326.0
+mode = 1

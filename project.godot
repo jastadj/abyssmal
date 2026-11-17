@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="abyssmal"
+run/main_scene="uid://b37mgya11iqom"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Console="*uid://b1ug0axy4yopc"
+Settings="*uid://c5jwij6n2tdkj"
 
 [display]
 

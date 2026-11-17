@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bmh54sf2ok2nr"]
+
+[ext_resource type="Script" uid="uid://c3456l4pbtcp8" path="res://ui/common/pathselector.gd" id="1_nkf7c"]
+
+[node name="pathselector" type="HBoxContainer" unique_id=14571287]
+offset_right = 729.0
+offset_bottom = 31.0
+script = ExtResource("1_nkf7c")
+
+[node name="ButtonSelectPath" type="Button" parent="." unique_id=1396240783]
+layout_mode = 2
+text = "..."
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1020475857]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1900698242]
+unique_name_in_owner = true
+access = 2
+use_native_dialog = true
+
+[connection signal="pressed" from="ButtonSelectPath" to="." method="_on_button_select_path_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_file_dialog_dir_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

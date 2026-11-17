@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b1ug0axy4yopc"]
+
+[ext_resource type="Script" uid="uid://nsxdj3kawadg" path="res://console/console.gd" id="1_42x45"]
+[ext_resource type="Script" uid="uid://d2j4dekjojs8" path="res://console/consoleparser.gd" id="2_p40m7"]
+
+[node name="console" type="CanvasLayer" unique_id=1057169973]
+layer = 90
+script = ExtResource("1_42x45")
+
+[node name="parser" type="Node2D" parent="." unique_id=105829183]
+unique_name_in_owner = true
+script = ExtResource("2_p40m7")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2116872688]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=269779210]
+layout_mode = 2
+
+[node name="output" type="TextEdit" parent="PanelContainer/VBoxContainer" unique_id=1852413003]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test"
+editable = false
+
+[node name="input" type="LineEdit" parent="PanelContainer/VBoxContainer" unique_id=1427964306]
+unique_name_in_owner = true
+layout_mode = 2
+keep_editing_on_text_submit = true
