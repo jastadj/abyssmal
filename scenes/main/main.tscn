@@ -1,18 +1,24 @@
 [gd_scene format=3 uid="uid://b37mgya11iqom"]
 
 [ext_resource type="PackedScene" uid="uid://bmh54sf2ok2nr" path="res://ui/common/pathselector.tscn" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://uel4ml021mwf" path="res://scenes/main/main.gd" id="1_iuonh"]
 
 [node name="main" type="Node2D" unique_id=178172233]
+script = ExtResource("1_iuonh")
 
-[node name="HBoxContainer" parent="." unique_id=14571287 instance=ExtResource("1_hyk8p")]
-offset_left = 157.0
-offset_top = 148.0
-offset_right = 886.0
-offset_bottom = 179.0
+[node name="uw1dir" type="HBoxContainer" parent="." unique_id=1586157552]
+offset_left = 81.0
+offset_top = 169.0
+offset_right = 926.0
+offset_bottom = 200.0
 
-[node name="HBoxContainer2" parent="." unique_id=113252768 instance=ExtResource("1_hyk8p")]
-offset_left = 153.0
-offset_top = 295.0
-offset_right = 882.0
-offset_bottom = 326.0
+[node name="UW1" type="Label" parent="uw1dir" unique_id=973906060]
+layout_mode = 2
+text = "UW1:"
+
+[node name="pathselector" parent="uw1dir" unique_id=14571287 instance=ExtResource("1_hyk8p")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+settings_key = "uw1_dir"
 mode = 1

@@ -3,7 +3,8 @@ extends CanvasLayer
 var logger:ConsoleLogger = ConsoleLogger.new()
 
 func add_output(s:String):
-	%output.text += s + "\n"
+	if !s.ends_with("\n"): s += "\n"
+	%output.text += s
 
 func _ready():
 	logger.connect("msg_logged", func(msg:String, err:bool):
@@ -22,3 +23,8 @@ func _input(event):
 func _on_text_submitted(new_text:String):
 	add_output(new_text)
 	%input.clear()
+
+
+func _on_visibility_changed() -> void:
+	if visible:
+		%input.grab_focus()
