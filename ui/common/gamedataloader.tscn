@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://s5ttwnq1voes"]
+
+[ext_resource type="Script" uid="uid://bubpm4o1kp7b4" path="res://ui/common/gamedataloader.gd" id="1_3fbd8"]
+[ext_resource type="PackedScene" uid="uid://bmh54sf2ok2nr" path="res://ui/common/pathselector.tscn" id="1_bvhh4"]
+[ext_resource type="PackedScene" uid="uid://bisxpaqxldyh" path="res://ui/common/load_progress.tscn" id="2_3fbd8"]
+
+[node name="gamedataloader" type="PanelContainer" unique_id=523475272]
+offset_right = 551.0
+offset_bottom = 175.0
+script = ExtResource("1_3fbd8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=949688303]
+custom_minimum_size = Vector2(500, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=96478014]
+layout_mode = 2
+
+[node name="gamedir" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1574357465]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="label" type="Label" parent="MarginContainer/VBoxContainer/gamedir" unique_id=1861844406]
+layout_mode = 2
+text = "Game Dir:"
+
+[node name="pathselector" parent="MarginContainer/VBoxContainer/gamedir" unique_id=14571287 instance=ExtResource("1_bvhh4")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mode = 1
+
+[node name="ButtonStartLoad" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1254328339]
+layout_mode = 2
+text = "Load From Binares"
+
+[node name="load_progress" parent="MarginContainer/VBoxContainer" unique_id=1573485451 instance=ExtResource("2_3fbd8")]
+unique_name_in_owner = true
+layout_mode = 2

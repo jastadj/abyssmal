@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Console="*uid://b1ug0axy4yopc"
 Settings="*uid://c5jwij6n2tdkj"
+UI="*uid://cs155v62gpn20"
 
 [display]
 

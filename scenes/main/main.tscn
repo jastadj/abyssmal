@@ -1,41 +1,55 @@
 [gd_scene format=3 uid="uid://b37mgya11iqom"]
 
-[ext_resource type="PackedScene" uid="uid://bmh54sf2ok2nr" path="res://ui/common/pathselector.tscn" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://uel4ml021mwf" path="res://scenes/main/main.gd" id="1_iuonh"]
-[ext_resource type="PackedScene" uid="uid://bisxpaqxldyh" path="res://ui/common/load_progress.tscn" id="3_k2fmo"]
 
 [node name="main" type="Node2D" unique_id=178172233]
 script = ExtResource("1_iuonh")
 
-[node name="uw1dir" type="HBoxContainer" parent="." unique_id=1586157552]
-offset_left = 81.0
-offset_top = 169.0
-offset_right = 926.0
-offset_bottom = 200.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=347686445]
 
-[node name="UW1" type="Label" parent="uw1dir" unique_id=973906060]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=1954491714]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1161203937]
 layout_mode = 2
-text = "UW1:"
 
-[node name="pathselector" parent="uw1dir" unique_id=14571287 instance=ExtResource("1_hyk8p")]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=583849065]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=31395915]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=321700600]
+layout_mode = 2
+text = "Game:"
+
+[node name="OptionButtonGame" type="OptionButton" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=2014742454]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="VBoxContainerEditors" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=2053391181]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonLoadData" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1111715114]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+text = "Load Data"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=1345021430]
 layout_mode = 2
 size_flags_horizontal = 3
-settings_key = "uw1_dir"
-mode = 1
 
-[node name="load_progress" parent="." unique_id=1573485451 instance=ExtResource("3_k2fmo")]
-unique_name_in_owner = true
-offset_left = 148.0
-offset_top = 383.0
-offset_right = 710.0
-offset_bottom = 449.0
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=62386584]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="ButtonStartLoad" type="Button" parent="." unique_id=740922636]
-offset_left = 351.0
-offset_top = 301.0
-offset_right = 504.0
-offset_bottom = 332.0
-text = "Load From Binares"
-
-[connection signal="pressed" from="ButtonStartLoad" to="." method="_on_button_start_load_pressed"]
+[connection signal="item_selected" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer/OptionButtonGame" to="." method="_on_option_button_game_item_selected"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/ButtonLoadData" to="." method="_on_button_load_data_pressed"]

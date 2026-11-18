@@ -1,7 +1,10 @@
 class_name GameDef
 extends Node
 
+enum GameType{NONE, UW1}
+
 var game_name:String = "unnamed"
+var game_type:GameType = GameType.NONE
 var data_dir:String = ""
 var files:Array = []
 var palette_file:String = ""
@@ -15,11 +18,9 @@ static func get_uw1() -> GameDef:
 	
 	var gd:GameDef = GameDef.new()
 	gd.game_name = "Ultima Underworld 1"
-	if Settings.has("uw1_dir"):
-		gd.data_dir = Settings.read("uw1_dir")
-	
+	gd.game_type = GameType.UW1
 	# Palette - 256 Colors
-	gd.files.append(str(gd.data_dir, "/", "DATA/PALS.DAT"))
+	gd.files.append("DATA/PALS.DAT")
 	gd.palette_file = gd.files.back()
 	return gd
 	
