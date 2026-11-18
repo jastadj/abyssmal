@@ -21,10 +21,16 @@ func _input(event):
 			visible = !visible
 	
 func _on_text_submitted(new_text:String):
-	add_output(new_text)
+	add_output(str("> ", new_text))
+	%commands.execute(new_text)
 	%input.clear()
 
 
 func _on_visibility_changed() -> void:
 	if visible:
 		%input.grab_focus()
+
+
+func _on_input_text_changed(new_text: String) -> void:
+	if %input.text.contains("`"):
+		%input.text = %input.text.replace("`", "")
