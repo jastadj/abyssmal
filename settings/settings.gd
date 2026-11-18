@@ -39,8 +39,8 @@ func load_settings() -> bool:
 		var s:String = FileAccess.get_file_as_string(settings_file)
 		var d = JSON.parse_string(s)
 		if d and d is Dictionary:
-			var new_settings:Dictionary = _get_new_settings()
-			_data = new_settings.merged(d, true)
+			var new_settings_dict:Dictionary = _get_new_settings()
+			_data = new_settings_dict.merged(d, true)
 			result = _data.has("version")
 	if result:
 		print("Loaded settings from: ", settings_file, ", version: ", _data["version"])

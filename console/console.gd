@@ -2,13 +2,18 @@ extends CanvasLayer
 
 var logger:ConsoleLogger = ConsoleLogger.new()
 
-func add_output(s:String):
-	if !s.ends_with("\n"): s += "\n"
-	%output.text += s
+func add_output(s:String, is_error:bool = false):
+	if Thread.is_main_thread():
+		if is_error:
+			s = str("[ERROR] ", s)
+		if !s.ends_with("\n"): s += "\n"
+		%output.text += s
+	else:
+		call_deferred("add_output", s, is_error)
 
 func _ready():
 	logger.connect("msg_logged", func(msg:String, err:bool):
-		add_output(msg)
+		add_output(msg, err)
 		)
 	OS.add_logger(logger)
 	hide()

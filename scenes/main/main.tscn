@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bmh54sf2ok2nr" path="res://ui/common/pathselector.tscn" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://uel4ml021mwf" path="res://scenes/main/main.gd" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://bisxpaqxldyh" path="res://ui/common/load_progress.tscn" id="3_k2fmo"]
 
 [node name="main" type="Node2D" unique_id=178172233]
 script = ExtResource("1_iuonh")
@@ -22,3 +23,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 settings_key = "uw1_dir"
 mode = 1
+
+[node name="load_progress" parent="." unique_id=1573485451 instance=ExtResource("3_k2fmo")]
+unique_name_in_owner = true
+offset_left = 148.0
+offset_top = 383.0
+offset_right = 710.0
+offset_bottom = 449.0
+
+[node name="ButtonStartLoad" type="Button" parent="." unique_id=740922636]
+offset_left = 351.0
+offset_top = 301.0
+offset_right = 504.0
+offset_bottom = 332.0
+text = "Load From Binares"
+
+[connection signal="pressed" from="ButtonStartLoad" to="." method="_on_button_start_load_pressed"]
