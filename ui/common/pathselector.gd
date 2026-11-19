@@ -2,7 +2,14 @@ extends HBoxContainer
 
 enum FILESELECTOR_MODE{SELECT_FILE, SELECT_DIR}
 
-@export var settings_key:String = ""
+@export var settings_key:String = "":
+	get(): return settings_key
+	set(val):
+		settings_key = val
+		if !settings_key.is_empty():
+			if Settings.has(settings_key):
+				filepath = Settings.read(settings_key)
+		
 
 @export var mode:FILESELECTOR_MODE = FILESELECTOR_MODE.SELECT_FILE:
 	get(): return mode
@@ -23,9 +30,7 @@ var filepath:String = "":
 		%FileDialog.current_path = filepath
 
 func _ready():
-	if !settings_key.is_empty():
-		if Settings.has(settings_key):
-			filepath = Settings.read(settings_key)
+	settings_key = settings_key
 	mode = mode
 	
 

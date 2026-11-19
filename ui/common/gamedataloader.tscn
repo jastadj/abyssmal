@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://bisxpaqxldyh" path="res://ui/common/load_progress.tscn" id="2_3fbd8"]
 
 [node name="gamedataloader" type="PanelContainer" unique_id=523475272]
-offset_right = 551.0
-offset_bottom = 175.0
+offset_right = 592.0
+offset_bottom = 199.0
 script = ExtResource("1_3fbd8")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=949688303]
@@ -17,6 +17,11 @@ size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=96478014]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=419478777]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="gamedir" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1574357465]
 layout_mode = 2
@@ -34,8 +39,16 @@ mode = 1
 
 [node name="ButtonStartLoad" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1254328339]
 layout_mode = 2
-text = "Load From Binares"
+text = "Load Binaries"
 
 [node name="load_progress" parent="MarginContainer/VBoxContainer" unique_id=1573485451 instance=ExtResource("2_3fbd8")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="ButtonClose" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1535985028]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonStartLoad" to="." method="_on_button_start_load_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonClose" to="." method="_on_button_close_pressed"]

@@ -26,6 +26,8 @@ func _init():
 	commands.add_cmd("settings", "Settings Menu")
 	commands.sub_cmds["settings"].add_cmd("show", "Show Settings", do_settings_show)
 	commands.sub_cmds["settings"].add_cmd("new", "New Settings", do_settings_new)
+	commands.sub_cmds["settings"].add_cmd("save", "Save Settings", do_settings_save)
+	commands.sub_cmds["settings"].add_cmd("load", "Load Settings", do_settings_load)
 	
 
 func execute(cmd_str:String):
@@ -85,3 +87,9 @@ func do_settings_show(_args:PackedStringArray):
 	
 func do_settings_new(_args:PackedStringArray):
 	Settings.new_settings()
+
+func do_settings_save(_args:PackedStringArray):
+	Settings.save_settings()
+	
+func do_settings_load(_args:PackedStringArray):
+	Settings.load_settings()

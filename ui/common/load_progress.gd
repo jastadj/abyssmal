@@ -12,6 +12,12 @@ extends MarginContainer
 		text = val
 		%Label.text = text
 
+@export var color:Color = Color.WHITE:
+	get(): return color
+	set(val):
+		color = val
+		%ProgressBar.self_modulate = color
+
 func _ready():
 	progress = progress
 	text = text

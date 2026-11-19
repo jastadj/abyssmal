@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://chi1r7jh5hc8w" path="res://console/console_theme.tres" id="3_aq6h5"]
 
 [node name="console" type="CanvasLayer" unique_id=1057169973]
-layer = 90
+layer = 95
 script = ExtResource("1_42x45")
 
 [node name="commands" type="Node2D" parent="." unique_id=105829183]

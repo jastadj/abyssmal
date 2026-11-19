@@ -19,6 +19,7 @@ func read(setting:String):
 	return null
 
 func new_settings():
+	print("New settings created.")
 	_data = _get_new_settings()
 
 func save_settings() -> bool:
@@ -54,7 +55,7 @@ func _ready():
 	load_settings()
 		
 func _exit_tree() -> void:
-	await save_settings()
+	save_settings()
 	
 
 func _get_new_settings() -> Dictionary:
