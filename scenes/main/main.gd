@@ -1,6 +1,6 @@
 extends Node2D
 
-enum DataEditor{NONE, PALETTES}
+enum DataEditor{NONE, PALETTES, SHADER}
 
 var games:Array = []
 var cur_game:GameDef = GameDef.new()
@@ -25,11 +25,21 @@ func set_editor(editor:DataEditor):
 			new_dlg.aux_palette = cur_game.aux_palette
 			new_dlg.light_palmap = cur_game.light_palette_map
 			new_dlg.mono_palmap = cur_game.mono_palette_map
+		DataEditor.SHADER:
+			new_dlg = preload("res://editors/shader_editor.tscn").instantiate()
+			new_dlg.pmap = cur_game.light_palette_map
 	if new_dlg:
 		%PanelContainerEditor.add_child(new_dlg)
 
 func _ready():
 	build_game_list()
+	# test
+	if Settings.has("Ultima Underworld 1"):
+		cur_game = games[0]
+		cur_game.data_dir = Settings.read("Ultima Underworld 1")
+		cur_game.load_binaries()
+		%ButtonLoadData.visible = false
+		%VBoxContainerEditors.visible = true
 
 func _on_option_button_game_item_selected(index: int) -> void:
 	print("Selecting game index ", index)
@@ -53,3 +63,7 @@ func _on_button_load_data_pressed() -> void:
 
 func _on_button_edit_palettes_pressed() -> void:
 	set_editor(DataEditor.PALETTES)
+
+
+func _on_button_edit_shaders_pressed() -> void:
+	set_editor(DataEditor.SHADER)

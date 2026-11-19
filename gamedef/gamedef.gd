@@ -93,7 +93,9 @@ func _load_binaries_thread():
 			if light_palette_map == null: _load_component_fail(steps[current_step])
 			else:
 				if !light_palette_map.generate_texture(palette): _load_component_fail(steps[current_step])
-				else: print("Generated ", light_palette_map.textures.size()," textures for ", steps[current_step])
+				else:
+					print("Generating texture for ", steps[current_step], "=", light_palette_map.generate_texture(palette))
+					print("texture = ", light_palette_map.texture)
 		
 		# Mono Palette Map
 		elif steps[current_step] == "Mono Palette Map":
