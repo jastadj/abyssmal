@@ -7,12 +7,17 @@ var game_name:String = "unnamed"
 var game_type:GameType = GameType.NONE
 var data_dir:String = ""
 var files:Array = []
+
 var palette_file:String = ""
 var aux_palette_file:String = ""
+var light_palette_map_file:String = ""
+var mono_palette_map_file:String = ""
 
 # data objects
 var palette:Palette = null
 var aux_palette:AuxPalette = null
+var light_palette_map:PaletteMap = null
+var mono_palette_map:PaletteMap = null
 
 # data loader
 var _load_thread:Thread = null
@@ -30,6 +35,10 @@ static func get_uw1() -> GameDef:
 	gd.palette_file = gd.files.back()
 	gd.files.append("DATA/ALLPALS.DAT") # Aux Palette - 16 Colors
 	gd.aux_palette_file = gd.files.back()
+	gd.files.append("DATA/LIGHT.DAT") # Light Palette Map
+	gd.light_palette_map_file = gd.files.back()
+	gd.files.append("DATA/MONO.DAT") # Mono Palette Map
+	gd.mono_palette_map_file = gd.files.back()
 	return gd
 
 func is_loading() -> bool:
@@ -54,10 +63,11 @@ func _load_component_fail(component:String):
 
 func _load_binaries_thread():
 	var current_step:int = 0
-	var component:String = ""
 	var steps:Array = []
 	steps.append("Palettes")
 	steps.append("Aux Palettes")
+	steps.append("Light Palette Map")
+	steps.append("Mono Palette Map")
 	
 	_load_failed = false
 	
@@ -71,10 +81,27 @@ func _load_binaries_thread():
 			if palette == null: _load_component_fail(steps[current_step])
 		
 		# Aux Palettes
-		if steps[current_step] == "Aux Palettes":
+		elif steps[current_step] == "Aux Palettes":
 			if !aux_palette_file.is_empty():
 				aux_palette = AuxPalette.load_from_binary(str(data_dir, "/", aux_palette_file))
 			if aux_palette == null: _load_component_fail(steps[current_step])
+			
+		# Light Palette Map
+		elif steps[current_step] == "Light Palette Map":
+			if !light_palette_map_file.is_empty():
+				light_palette_map = PaletteMap.load_from_binary(str(data_dir, "/", light_palette_map_file))
+			if light_palette_map == null: _load_component_fail(steps[current_step])
+		
+		# Mono Palette Map
+		elif steps[current_step] == "Mono Palette Map":
+			if !mono_palette_map_file.is_empty():
+				mono_palette_map = PaletteMap.load_from_binary(str(data_dir, "/", mono_palette_map_file))
+			if mono_palette_map == null: _load_component_fail(steps[current_step])
+		
+		
+		# ERROR
+		else:
+			printerr("Load binaries error, unhandled step: ", steps[current_step])
 		
 		# done?
 		current_step += 1

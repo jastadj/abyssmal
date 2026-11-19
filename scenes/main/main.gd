@@ -23,6 +23,8 @@ func set_editor(editor:DataEditor):
 			new_dlg = preload("res://editors/palette_editor.tscn").instantiate()
 			new_dlg.palette = cur_game.palette
 			new_dlg.aux_palette = cur_game.aux_palette
+			new_dlg.light_palmap = cur_game.light_palette_map
+			new_dlg.mono_palmap = cur_game.mono_palette_map
 	if new_dlg:
 		%PanelContainerEditor.add_child(new_dlg)
 
