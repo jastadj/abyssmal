@@ -7,6 +7,8 @@ const MAX_COLORS:int = 256
 
 var palette_maps:Array = []
 
+var textures:Array = []
+
 static func load_from_binary(filepath:String) -> PaletteMap:
 	var palmap:PaletteMap = null
 	print("Loading Palette Map from ", filepath)
@@ -26,3 +28,22 @@ static func load_from_binary(filepath:String) -> PaletteMap:
 	if palmap == null:
 		printerr("Error loading palette map from ", filepath)
 	return palmap
+
+func generate_texture(palette:Palette) -> bool:
+	var result:bool = true
+	textures.clear()
+	if palette and !palette.palettes.is_empty():
+		for p in palette.palettes:
+			var img:Image = Image.create(Palette.MAX_COLORS, 1, false, Image.FORMAT_RGBA8)
+			for c in range(Palette.MAX_COLORS):
+				img.set_pixel(c, 0, p[c])
+			var texture:ImageTexture = ImageTexture.create_from_image(img)
+			if texture:
+				textures.append(texture)
+			else:
+				result = false
+				break
+	else: result = false
+	if !result: textures.clear()
+	return result
+		
