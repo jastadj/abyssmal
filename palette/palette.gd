@@ -27,10 +27,15 @@ static func load_from_binary(filepath:String) -> Palette:
 			pal.palettes.append([])
 			# for each palette color
 			for n in range(MAX_COLORS):
-				var r:int = clamp(data[(i*MAX_COLORS) + (n*COMPS) + 0], 0, MAX_INTENSITY)
-				var g:int = clamp(data[(i*MAX_COLORS) + (n*COMPS) + 1], 0, MAX_INTENSITY)
-				var b:int = clamp(data[(i*MAX_COLORS) + (n*COMPS) + 2], 0, MAX_INTENSITY)
+				var r:int = clamp(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 0], 0, MAX_INTENSITY)
+				var g:int = clamp(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 1], 0, MAX_INTENSITY)
+				var b:int = clamp(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 2], 0, MAX_INTENSITY)
 				var a:float = 1.0
+				if i == 2 and n == 16:
+					print("PAL ", i, " @ ", (i*MAX_COLORS*COMPS), ", COLOR INDEX ", n, " DEBUG, DATA INDEX START ", )
+					print(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 0])
+					print(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 1])
+					print(data[(i*MAX_COLORS*COMPS) + (n*COMPS) + 2])
 				if n == 0: a = 0.0 # index 0 is always transparent
 				pal.palettes[i].append(Color(
 						float(r)/float(MAX_INTENSITY),
