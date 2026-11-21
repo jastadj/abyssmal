@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://1ddntonag6kv" path="res://editors/shader_editor.gd" id="1_bsmcv"]
 [ext_resource type="Shader" uid="uid://bgh3b6d5ipehr" path="res://shaders/test.gdshader" id="2_43eid"]
 [ext_resource type="Script" uid="uid://dp3x0w4ywa0le" path="res://cam2d/cam2d.gd" id="2_fxx87"]
-[ext_resource type="Texture2D" uid="uid://dlg16w1yaeumy" path="res://icon.svg" id="3_e6ske"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43eid"]
 shader = ExtResource("2_43eid")
@@ -25,7 +24,9 @@ size_flags_vertical = 3
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer" unique_id=673933940]
+handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
 [node name="Node2D" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=808357917]
 
@@ -35,7 +36,3 @@ material = SubResource("ShaderMaterial_43eid")
 
 [node name="Camera2D" type="Camera2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Node2D" unique_id=60847444]
 script = ExtResource("2_fxx87")
-
-[node name="Icon" type="Sprite2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Node2D" unique_id=46397678]
-position = Vector2(101, 88)
-texture = ExtResource("3_e6ske")

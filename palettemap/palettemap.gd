@@ -30,6 +30,7 @@ static func load_from_binary(filepath:String) -> PaletteMap:
 	return palmap
 
 # generates a texture where each line run is one palette, all palettes stacked
+# each color stores the mapped index in the r component
 func generate_texture(palette:Palette) -> bool:
 	var result:bool = true
 	var img:Image = Image.create(Palette.MAX_COLORS, palette_maps.size(), false, Image.FORMAT_RGBA8)
@@ -37,7 +38,8 @@ func generate_texture(palette:Palette) -> bool:
 	if palette and !palette.palettes.is_empty():
 		for y in range(palette_maps.size()):
 			for x in range(Palette.MAX_COLORS):
-				img.set_pixel(x, y, palette.palettes[0][palette_maps[y][x]])
+				var r = float(palette_maps[y][x]) / 255.0
+				img.set_pixel(x, y, Color(r, 0, 0))
 		texture = ImageTexture.create_from_image(img)
 		result = (texture != null)
 	else: result = false

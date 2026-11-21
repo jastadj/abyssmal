@@ -10,6 +10,8 @@ const COMPS:int = 3
 
 var palettes:Array = []
 
+var texture:ImageTexture = null
+
 static func load_from_binary(filepath:String) -> Palette:
 	const MAX_INTENSITY:int = 63
 	var pal:Palette = null
@@ -41,3 +43,12 @@ static func load_from_binary(filepath:String) -> Palette:
 	if pal == null:
 		printerr("Error loading palette from ", filepath)
 	return pal
+
+func generate_texture() -> bool:
+	var img:Image = Image.create(MAX_COLORS, palettes.size(), false, Image.FORMAT_RGBA8)
+	texture = null
+	for y in range(palettes.size()):
+		for x in range(Palette.MAX_COLORS):
+			img.set_pixel(x, y, palettes[y][x])
+	texture = ImageTexture.create_from_image(img)
+	return true

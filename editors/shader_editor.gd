@@ -1,5 +1,7 @@
 extends PanelContainer
 
+const SPRITE_SCALE:float = 16.0
+
 var pmap:PaletteMap = null
 
 func _ready():
@@ -19,4 +21,5 @@ func _ready():
 	#%Sprite2D.texture = texture
 	%Sprite2D.texture = pmap.texture
 	%Sprite2D.texture_filter = TEXTURE_FILTER_NEAREST
+	%Sprite2D.scale = Vector2(1,1) * SPRITE_SCALE
 	#%Sprite2D.material.set_shader_parameter("palette_texture", pmap.texture)

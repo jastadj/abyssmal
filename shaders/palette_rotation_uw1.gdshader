@@ -1,18 +1,27 @@
 shader_type canvas_item;
 
-uniform sampler2D index_texture;
 uniform sampler2D palette_texture;
-uniform int palette_offset = 0;
+uniform int palette_index = 0;
+
+uniform bool has_mapper = false;
+uniform sampler2D mapper_texture;
+uniform int mapper_index = 0;
 
 void fragment()
 {
-    float idx = texture(index_texture, UV).r * 255.0;
+    int idx = int(texture(TEXTURE, UV).r * 255.0);
 
-    int shifted = (int(idx) + palette_offset) % 256;
-
-    COLOR = texelFetch(
-        palette_texture,
-        ivec2(shifted, 0),
-        0
-    );
+	if(has_mapper)
+	{
+		idx = int(texelFetch(
+	        mapper_texture,
+	        ivec2(idx, mapper_index),
+	        0
+	    ).r * 255.0);
+	}
+	COLOR = texelFetch(
+		        palette_texture,
+		        ivec2(idx, palette_index),
+		        0
+		    );
 }

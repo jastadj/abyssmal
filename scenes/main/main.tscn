@@ -17,51 +17,51 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1161203937]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=583849065]
+[node name="VBoxContainerLeft" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=583849065]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=31395915]
+[node name="HBoxContainerGame" type="HBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft" unique_id=31395915]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=321700600]
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/HBoxContainerGame" unique_id=321700600]
 layout_mode = 2
 text = "Game:"
 
-[node name="OptionButtonGame" type="OptionButton" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=2014742454]
+[node name="OptionButtonGame" type="OptionButton" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/HBoxContainerGame" unique_id=2014742454]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="VBoxContainerEditors" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=2053391181]
+[node name="VBoxContainerEditors" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft" unique_id=2053391181]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ButtonEditPalettes" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/VBoxContainerEditors" unique_id=856664328]
+[node name="ButtonEditPalettes" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=856664328]
 layout_mode = 2
 text = "Palettes"
 
-[node name="ButtonEditShaders" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/VBoxContainerEditors" unique_id=643613430]
+[node name="ButtonEditShaders" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=643613430]
 layout_mode = 2
 text = "Shaders"
 
-[node name="ButtonLoadData" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=1111715114]
+[node name="ButtonLoadData" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft" unique_id=1111715114]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 6
 text = "Load Data"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=1345021430]
+[node name="VBoxContainerRight" type="VBoxContainer" parent="CanvasLayer/PanelContainer/HBoxContainer" unique_id=1345021430]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainerEditor" type="PanelContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=62386584]
+[node name="PanelContainerEditor" type="PanelContainer" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerRight" unique_id=62386584]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="item_selected" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer/OptionButtonGame" to="." method="_on_option_button_game_item_selected"]
-[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/VBoxContainerEditors/ButtonEditPalettes" to="." method="_on_button_edit_palettes_pressed"]
-[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/VBoxContainerEditors/ButtonEditShaders" to="." method="_on_button_edit_shaders_pressed"]
-[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainer2/ButtonLoadData" to="." method="_on_button_load_data_pressed"]
+[connection signal="item_selected" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/HBoxContainerGame/OptionButtonGame" to="." method="_on_option_button_game_item_selected"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditPalettes" to="." method="_on_button_edit_palettes_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditShaders" to="." method="_on_button_edit_shaders_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/ButtonLoadData" to="." method="_on_button_load_data_pressed"]

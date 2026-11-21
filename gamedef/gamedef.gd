@@ -79,6 +79,10 @@ func _load_binaries_thread():
 			if !palette_file.is_empty():
 				palette = Palette.load_from_binary(str(data_dir, "/", palette_file))
 			if palette == null: _load_component_fail(steps[current_step])
+			else:
+				if !palette.generate_texture(): _load_component_fail(steps[current_step])
+				else:
+					print("Generating texture for ", steps[current_step], "=", palette.generate_texture())
 		
 		# Aux Palettes
 		elif steps[current_step] == "Aux Palettes":
@@ -95,14 +99,16 @@ func _load_binaries_thread():
 				if !light_palette_map.generate_texture(palette): _load_component_fail(steps[current_step])
 				else:
 					print("Generating texture for ", steps[current_step], "=", light_palette_map.generate_texture(palette))
-					print("texture = ", light_palette_map.texture)
 		
 		# Mono Palette Map
 		elif steps[current_step] == "Mono Palette Map":
 			if !mono_palette_map_file.is_empty():
 				mono_palette_map = PaletteMap.load_from_binary(str(data_dir, "/", mono_palette_map_file))
 			if mono_palette_map == null: _load_component_fail(steps[current_step])
-		
+			else:
+				if !mono_palette_map.generate_texture(palette): _load_component_fail(steps[current_step])
+				else:
+					print("Generating texture for ", steps[current_step], "=", mono_palette_map.generate_texture(palette))
 		
 		# ERROR
 		else:
