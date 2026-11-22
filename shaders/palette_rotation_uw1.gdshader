@@ -14,7 +14,7 @@ uniform int mapper_index = 0;
 int rotate_pixel(int idx, float tick, int start, int end, bool up)
 {
 	int state = int(mod(tick, float(end - start + 1)));
-	if(up)
+	if(!up)
 	{
 		idx += state;
 		if(idx > end)

@@ -27,6 +27,10 @@ var bitmaps:Array[ImageArchive] = []
 var graphic_files:PackedStringArray
 var graphics:Array[ImageArchive] = []
 
+# textures
+var texture_files:PackedStringArray
+var textures:Array[ImageArchive] = []
+
 # data loader
 var _load_thread:Thread = null
 var _load_failed:bool = false
@@ -81,6 +85,13 @@ static func get_uw1() -> GameDef:
 		"DATA/OBJECTS.GR",
 		"DATA/OPBTN.GR"
 	]
+	# textures
+	gd.texture_files = [
+		"DATA/F16.TR",
+		"DATA/F32.TR",
+		"DATA/W16.TR",
+		"DATA/W64.TR",
+	]
 	
 	return gd
 
@@ -115,6 +126,8 @@ func _load_binaries_thread():
 		steps.append(bitmap_file)
 	for graphics_file in graphic_files:
 		steps.append(graphics_file)
+	for texture_file in texture_files:
+		steps.append(texture_file)
 	
 	_load_failed = false
 	
@@ -185,6 +198,14 @@ func _load_binaries_thread():
 			else:
 				imgarchive.archive_name = steps[current_step]
 				graphics.append(imgarchive)
+		
+		# Texture Files
+		elif texture_files.has(steps[current_step]):
+			var imgarchive:ImageArchive = ImageArchive.load_graphics_file(str(data_dir, "/", steps[current_step]))
+			if imgarchive == null: _load_component_fail(steps[current_step])
+			else:
+				imgarchive.archive_name = steps[current_step]
+				textures.append(imgarchive)
 		
 		# ERROR
 		else:
