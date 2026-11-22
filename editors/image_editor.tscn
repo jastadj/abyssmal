@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://bmxxa0jd0ae3d"]
+
+[ext_resource type="Script" uid="uid://e4ryg4ip28eu" path="res://editors/image_editor.gd" id="1_bnh68"]
+[ext_resource type="Shader" uid="uid://ct1pllwidq8iv" path="res://shaders/palette_rotation_uw1.gdshader" id="2_rrbuw"]
+[ext_resource type="Script" uid="uid://dp3x0w4ywa0le" path="res://cam2d/cam2d.gd" id="3_bkshy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j484j"]
+shader = ExtResource("2_rrbuw")
+shader_parameter/palette_index = 0
+shader_parameter/has_mapper = false
+shader_parameter/mapper_index = 0
+
+[node name="image_editor" type="PanelContainer" unique_id=363615980]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bnh68")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=31735855]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1267312146]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=686099506]
+layout_mode = 2
+text = "Data:"
+
+[node name="OptionButtonData" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=1479997197]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=841245970]
+layout_mode = 2
+text = "Index:"
+
+[node name="OptionButtonIndex" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=300835328]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=66528796]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer" unique_id=711360213]
+handle_input_locally = false
+size = Vector2i(1152, 621)
+render_target_update_mode = 4
+
+[node name="Node2D" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=884704355]
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Node2D" unique_id=929746287]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_j484j")
+
+[node name="Camera2D" type="Camera2D" parent="VBoxContainer/SubViewportContainer/SubViewport/Node2D" unique_id=1705776937]
+unique_name_in_owner = true
+zoom = Vector2(2, 2)
+script = ExtResource("3_bkshy")
+
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButtonData" to="." method="_on_option_button_data_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/OptionButtonData" to="." method="_on_option_button_data_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButtonIndex" to="." method="_on_option_button_index_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/OptionButtonIndex" to="." method="_on_option_button_index_pressed"]

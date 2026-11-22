@@ -9,7 +9,6 @@ const MAX_COLORS:int = 256
 const COMPS:int = 3
 
 var palettes:Array = []
-
 var texture:ImageTexture = null
 
 static func load_from_binary(filepath:String) -> Palette:
