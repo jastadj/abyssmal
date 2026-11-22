@@ -20,7 +20,12 @@ var light_palette_map:PaletteMap = null
 var mono_palette_map:PaletteMap = null
 
 # bitmap images
-var bitmaps:Dictionary = {} # key = filename, value = indexedimage
+var bitmap_files:PackedStringArray
+var bitmaps:Array[ImageArchive] = []
+
+# graphics
+var graphic_files:PackedStringArray
+var graphics:Array[ImageArchive] = []
 
 # data loader
 var _load_thread:Thread = null
@@ -39,8 +44,44 @@ static func get_uw1() -> GameDef:
 	gd.aux_palette_file = "DATA/ALLPALS.DAT"
 	gd.light_palette_map_file = "DATA/LIGHT.DAT"
 	gd.mono_palette_map_file = "DATA/MONO.DAT"
-	# images
-	gd.bitmaps["DATA/MAIN.BYT"] = null
+	# bitmaps
+	gd.bitmap_files = [
+		"DATA/BLNKMAP.BYT",
+		"DATA/CHARGEN.BYT",
+		"DATA/CONV.BYT",
+		"DATA/MAIN.BYT",
+		"DATA/OPSCR.BYT",
+		"DATA/PRES1.BYT",
+		"DATA/PRES2.BYT",
+		"DATA/WIN1.BYT",
+		"DATA/WIN2.BYT"
+	]
+	# graphics
+	gd.graphic_files = [
+		"DATA/3DWIN.GR",
+		"DATA/ANIMO.GR",
+		"DATA/ARMOR_F.GR",
+		"DATA/ARMOR_M.GR",
+		"DATA/BODIES.GR",
+		"DATA/BUTTONS.GR",
+		"DATA/CHAINS.GR",
+		"DATA/CHARHEAD.GR",
+		"DATA/CHRBTNS.GR",
+		"DATA/COMPASS.GR",
+		"DATA/CONVERSE.GR",
+		"DATA/CURSORS.GR",
+		"DATA/DOORS.GR",
+		"DATA/DRAGONS.GR",
+		"DATA/EYES.GR",
+		"DATA/FLASKS.GR",
+		"DATA/GENHEAD.GR",
+		"DATA/HEADS.GR",
+		"DATA/INV.GR",
+		"DATA/LFTI.GR",
+		"DATA/OBJECTS.GR",
+		"DATA/OPBTN.GR"
+	]
+	
 	return gd
 
 func is_loading() -> bool:
@@ -70,8 +111,10 @@ func _load_binaries_thread():
 	steps.append(aux_palette_file)
 	steps.append(light_palette_map_file)
 	steps.append(mono_palette_map_file)
-	for bitmap_file in bitmaps.keys():
+	for bitmap_file in bitmap_files:
 		steps.append(bitmap_file)
+	for graphics_file in graphic_files:
+		steps.append(graphics_file)
 	
 	_load_failed = false
 	
@@ -85,12 +128,16 @@ func _load_binaries_thread():
 			else:
 				if !palette.generate_texture(): _load_component_fail(steps[current_step])
 				else:
-					print("Generating texture for ", steps[current_step], "=", palette.generate_texture())
+					print("Generated texture for ", steps[current_step])
 		
 		# Aux Palettes
 		elif steps[current_step] == aux_palette_file:
 			aux_palette = AuxPalette.load_from_binary(str(data_dir, "/", aux_palette_file))
 			if aux_palette == null: _load_component_fail(steps[current_step])
+			else:
+				if !aux_palette.generate_texture(): _load_component_fail(steps[current_step])
+				else:
+					print("Generated texture for ", steps[current_step])
 			
 		# Light Palette Map
 		elif steps[current_step] == light_palette_map_file:
@@ -99,7 +146,7 @@ func _load_binaries_thread():
 			else:
 				if !light_palette_map.generate_texture(palette): _load_component_fail(steps[current_step])
 				else:
-					print("Generating texture for ", steps[current_step], "=", light_palette_map.generate_texture(palette))
+					print("Generated texture for ", steps[current_step])
 		
 		# Mono Palette Map
 		elif steps[current_step] == mono_palette_map_file:
@@ -108,15 +155,36 @@ func _load_binaries_thread():
 			else:
 				if !mono_palette_map.generate_texture(palette): _load_component_fail(steps[current_step])
 				else:
-					print("Generating texture for ", steps[current_step], "=", mono_palette_map.generate_texture(palette))
+					print("Generated texture for ", steps[current_step])
 		
 		# Bitmap Files
-		elif bitmaps.keys().has(steps[current_step]):
-			bitmaps[steps[current_step]] = IndexedImage.load_bitmap_file(str(data_dir, "/", steps[current_step]))
-			if bitmaps[steps[current_step]] == null: _load_component_fail(steps[current_step])
-			
-			
+		elif bitmap_files.has(steps[current_step]):
+			var imgarchive:ImageArchive = ImageArchive.load_bitmap_file(str(data_dir, "/", steps[current_step]))
+			if imgarchive == null: _load_component_fail(steps[current_step])
+			else:
+				imgarchive.archive_name = steps[current_step]
+				bitmaps.append(imgarchive)
+				if game_type == GameType.UW1:
+					var p:int = 0
+					match steps[current_step]:
+						"DATA/BLNKMAP.BYT": p = 1
+						"DATA/CHARGEN.BYT": p = 3
+						"DATA/OPSCR.BYT": p = 2
+						"DATA/PRES1.BYT": p = 5
+						"DATA/PRES2.BYT": p = 5
+						"DATA/WIN1.BYT": p = 7
+						"DATA/WIN2.BYT": p = 7
+						_: p = 0
+					for img in imgarchive.images:
+						if img: img.palette_index = p
 		
+		# Graphics Files
+		elif graphic_files.has(steps[current_step]):
+			var imgarchive:ImageArchive = ImageArchive.load_graphics_file(str(data_dir, "/", steps[current_step]))
+			if imgarchive == null: _load_component_fail(steps[current_step])
+			else:
+				imgarchive.archive_name = steps[current_step]
+				graphics.append(imgarchive)
 		
 		# ERROR
 		else:

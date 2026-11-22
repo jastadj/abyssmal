@@ -7,6 +7,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j484j"]
 shader = ExtResource("2_rrbuw")
 shader_parameter/palette_index = 0
+shader_parameter/has_aux_palette = false
+shader_parameter/aux_palette = 0
 shader_parameter/has_mapper = false
 shader_parameter/mapper_index = 0
 
@@ -40,6 +42,27 @@ text = "Index:"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1108587346]
+layout_mode = 2
+text = "Palette:"
+
+[node name="OptionButtonPalette" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=995345535]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainerAuxPalette" type="HBoxContainer" parent="VBoxContainer/HBoxContainer" unique_id=695667026]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/HBoxContainerAuxPalette" unique_id=1586632141]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Aux Palette:"
+
+[node name="OptionButtonAuxPalette" type="OptionButton" parent="VBoxContainer/HBoxContainer/HBoxContainerAuxPalette" unique_id=876255552]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=66528796]
 layout_mode = 2
 size_flags_vertical = 3
@@ -61,7 +84,43 @@ unique_name_in_owner = true
 zoom = Vector2(2, 2)
 script = ExtResource("3_bkshy")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=789878526]
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer" unique_id=1189652772]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -40.0
+offset_right = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer/PanelContainer" unique_id=1834494912]
+layout_mode = 2
+
+[node name="ButtonLeft" type="Button" parent="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer/PanelContainer/HBoxContainer" unique_id=896953484]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "<"
+
+[node name="ButtonRight" type="Button" parent="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer/PanelContainer/HBoxContainer" unique_id=860143779]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = ">"
+
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButtonData" to="." method="_on_option_button_data_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/OptionButtonData" to="." method="_on_option_button_data_pressed"]
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButtonIndex" to="." method="_on_option_button_index_item_selected"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/OptionButtonIndex" to="." method="_on_option_button_index_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButtonPalette" to="." method="_on_option_button_palette_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/OptionButtonPalette" to="." method="_on_option_button_palette_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer/HBoxContainerAuxPalette/OptionButtonAuxPalette" to="." method="_on_option_button_aux_palette_item_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HBoxContainerAuxPalette/OptionButtonAuxPalette" to="." method="_on_option_button_aux_palette_pressed"]
+[connection signal="pressed" from="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer/PanelContainer/HBoxContainer/ButtonLeft" to="." method="_on_button_left_pressed"]
+[connection signal="pressed" from="VBoxContainer/SubViewportContainer/SubViewport/CanvasLayer/PanelContainer/HBoxContainer/ButtonRight" to="." method="_on_button_right_pressed"]

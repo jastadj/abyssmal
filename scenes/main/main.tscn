@@ -45,6 +45,10 @@ text = "Palettes"
 layout_mode = 2
 text = "Bitmaps"
 
+[node name="ButtonEditGraphics" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=1650694420]
+layout_mode = 2
+text = "Graphics"
+
 [node name="ButtonEditShaders" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=643613430]
 layout_mode = 2
 text = "Shaders"
@@ -68,5 +72,6 @@ size_flags_vertical = 3
 [connection signal="item_selected" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/HBoxContainerGame/OptionButtonGame" to="." method="_on_option_button_game_item_selected"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditPalettes" to="." method="_on_button_edit_palettes_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditBitmaps" to="." method="_on_button_edit_bitmaps_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditGraphics" to="." method="_on_button_edit_graphics_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditShaders" to="." method="_on_button_edit_shaders_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/ButtonLoadData" to="." method="_on_button_load_data_pressed"]

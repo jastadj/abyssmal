@@ -1,6 +1,6 @@
 extends Node2D
 
-enum DataEditor{NONE, PALETTES, BITMAPS, SHADER}
+enum DataEditor{NONE, PALETTES, BITMAPS, GRAPHICS, SHADER}
 
 var games:Array = []
 var cur_game:GameDef = GameDef.new()
@@ -22,13 +22,21 @@ func set_editor(editor:DataEditor):
 		DataEditor.PALETTES:
 			new_dlg = preload("res://editors/palette_editor.tscn").instantiate()
 			new_dlg.palette = cur_game.palette
+			new_dlg.aux_palette = cur_game.aux_palette
 			new_dlg.light_palmap = cur_game.light_palette_map
 			new_dlg.mono_palmap = cur_game.mono_palette_map
 		DataEditor.BITMAPS:
 			new_dlg = preload("res://editors/image_editor.tscn").instantiate()
 			new_dlg.palette = cur_game.palette
+			new_dlg.auxpalette = cur_game.aux_palette
 			new_dlg.mapper = cur_game.light_palette_map
 			new_dlg.images = cur_game.bitmaps
+		DataEditor.GRAPHICS:
+			new_dlg = preload("res://editors/image_editor.tscn").instantiate()
+			new_dlg.palette = cur_game.palette
+			new_dlg.auxpalette = cur_game.aux_palette
+			new_dlg.mapper = cur_game.light_palette_map
+			new_dlg.images = cur_game.graphics
 		DataEditor.SHADER:
 			new_dlg = preload("res://editors/shader_editor.tscn").instantiate()
 			new_dlg.pmap = cur_game.light_palette_map
@@ -70,6 +78,9 @@ func _on_button_edit_palettes_pressed() -> void:
 
 func _on_button_edit_bitmaps_pressed() -> void:
 	set_editor(DataEditor.BITMAPS)
+
+func _on_button_edit_graphics_pressed() -> void:
+	set_editor(DataEditor.GRAPHICS)
 
 func _on_button_edit_shaders_pressed() -> void:
 	set_editor(DataEditor.SHADER)

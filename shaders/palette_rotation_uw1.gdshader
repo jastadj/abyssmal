@@ -3,6 +3,10 @@ shader_type canvas_item;
 uniform sampler2D palette_texture;
 uniform int palette_index = 0;
 
+uniform bool has_aux_palette = false;
+uniform sampler2D aux_palette_texture;
+uniform int aux_palette = 0;
+
 uniform bool has_mapper = false;
 uniform sampler2D mapper_texture;
 uniform int mapper_index = 0;
@@ -32,6 +36,16 @@ int rotate_pixel(int idx, float tick, int start, int end, bool up)
 void fragment()
 {
     int idx = int(texture(TEXTURE, UV).r * 255.0);
+	
+	// aux palette mapping
+	if(has_aux_palette)
+	{
+		idx = int(texelFetch(
+	        aux_palette_texture,
+	        ivec2(idx, aux_palette),
+	        0
+	    ).r * 255.0);
+	}
 	
 	// remap index if mapper is used
 	if(has_mapper)
