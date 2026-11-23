@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c6j56kinhj15w"]
+
+[ext_resource type="Script" uid="uid://da7uvp7k18sl4" path="res://editors/font_editor.gd" id="1_6jqgw"]
+[ext_resource type="Shader" uid="uid://ct1pllwidq8iv" path="res://shaders/palette_rotation_uw1.gdshader" id="2_d5t5v"]
+[ext_resource type="Script" uid="uid://dp3x0w4ywa0le" path="res://cam2d/cam2d.gd" id="3_6emf3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d5t5v"]
+shader = ExtResource("2_d5t5v")
+shader_parameter/palette_index = 0
+shader_parameter/has_aux_palette = false
+shader_parameter/aux_palette = 0
+shader_parameter/has_mapper = false
+shader_parameter/mapper_index = 0
+
+[node name="font_editor" type="PanelContainer" unique_id=1608173515]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6jqgw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1884076347]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1367391622]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=711505314]
+layout_mode = 2
+text = "Font:"
+
+[node name="OptionButtonFonts" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=1392776607]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer" unique_id=248736484]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/VBoxContainer2" unique_id=757525134]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "The quick brown fox jumps over the lazy dog"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/VBoxContainer2" unique_id=1668176004]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/VBoxContainer2/SubViewportContainer" unique_id=165243311]
+handle_input_locally = false
+size = Vector2i(1152, 309)
+render_target_update_mode = 4
+
+[node name="Node2D" type="Node2D" parent="VBoxContainer/VBoxContainer2/SubViewportContainer/SubViewport" unique_id=89635780]
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer/VBoxContainer2/SubViewportContainer/SubViewport/Node2D" unique_id=2058173850]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_d5t5v")
+
+[node name="Camera2D" type="Camera2D" parent="VBoxContainer/VBoxContainer2/SubViewportContainer/SubViewport/Node2D" unique_id=955976735]
+unique_name_in_owner = true
+zoom = Vector2(2, 2)
+script = ExtResource("3_6emf3")

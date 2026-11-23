@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bigmvhionvv38"
-path="res://.godot/imported/Courier Prime Code.ttf-1bff4205648fb5828fb1a89b724ff40a.fontdata"
+uid="uid://n3qkwxb0h2q2"
+path="res://.godot/imported/Courier Prime Code Italic.ttf-bb6a1c2c85d63060ba8e54f22dcb2e73.fontdata"
 
 [deps]
 
-source_file="res://fonts/courier_prime_code/Courier Prime Code.ttf"
-dest_files=["res://.godot/imported/Courier Prime Code.ttf-1bff4205648fb5828fb1a89b724ff40a.fontdata"]
+source_file="res://resources/fonts/courier_prime_code/Courier Prime Code Italic.ttf"
+dest_files=["res://.godot/imported/Courier Prime Code Italic.ttf-bb6a1c2c85d63060ba8e54f22dcb2e73.fontdata"]
 
 [params]
 

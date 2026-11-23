@@ -1,6 +1,6 @@
 extends Node2D
 
-enum DataEditor{NONE, PALETTES, BITMAPS, GRAPHICS, TEXTURES, SHADER}
+enum DataEditor{NONE, PALETTES, BITMAPS, GRAPHICS, TEXTURES, FONTS, SHADER}
 
 var games:Array = []
 var cur_game:GameDef = GameDef.new()
@@ -43,6 +43,10 @@ func set_editor(editor:DataEditor):
 			new_dlg.auxpalette = cur_game.aux_palette
 			new_dlg.mapper = cur_game.light_palette_map
 			new_dlg.images = cur_game.textures
+		DataEditor.FONTS:
+			new_dlg = preload("res://editors/font_editor.tscn").instantiate()
+			new_dlg.palette = cur_game.palette
+			new_dlg.fonts = cur_game.fonts
 		DataEditor.SHADER:
 			new_dlg = preload("res://editors/shader_editor.tscn").instantiate()
 			new_dlg.pmap = cur_game.light_palette_map
@@ -91,5 +95,8 @@ func _on_button_edit_graphics_pressed() -> void:
 func _on_button_edit_textures_pressed() -> void:
 	set_editor(DataEditor.TEXTURES)
 
+func _on_button_edit_fonts_pressed() -> void:
+	set_editor(DataEditor.FONTS)
+	
 func _on_button_edit_shaders_pressed() -> void:
 	set_editor(DataEditor.SHADER)

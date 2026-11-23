@@ -53,6 +53,10 @@ text = "Graphics"
 layout_mode = 2
 text = "Textures"
 
+[node name="ButtonEditFonts" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=231353036]
+layout_mode = 2
+text = "Fonts"
+
 [node name="ButtonEditShaders" type="Button" parent="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors" unique_id=643613430]
 layout_mode = 2
 text = "Shaders"
@@ -78,5 +82,6 @@ size_flags_vertical = 3
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditBitmaps" to="." method="_on_button_edit_bitmaps_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditGraphics" to="." method="_on_button_edit_graphics_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditTextures" to="." method="_on_button_edit_textures_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditFonts" to="." method="_on_button_edit_fonts_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/VBoxContainerEditors/ButtonEditShaders" to="." method="_on_button_edit_shaders_pressed"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/HBoxContainer/VBoxContainerLeft/ButtonLoadData" to="." method="_on_button_load_data_pressed"]

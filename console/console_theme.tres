@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://chi1r7jh5hc8w"]
 
-[ext_resource type="FontFile" uid="uid://bigmvhionvv38" path="res://fonts/courier_prime_code/Courier Prime Code.ttf" id="1_ycaf5"]
+[ext_resource type="FontFile" uid="uid://bigmvhionvv38" path="res://resources/fonts/courier_prime_code/Courier Prime Code.ttf" id="1_ycaf5"]
 
 [resource]
 LineEdit/fonts/font = ExtResource("1_ycaf5")

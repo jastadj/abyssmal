@@ -31,6 +31,10 @@ var graphics:Array[ImageArchive] = []
 var texture_files:PackedStringArray
 var textures:Array[ImageArchive] = []
 
+# fonts
+var font_files:PackedStringArray
+var fonts:Array[UFont] = []
+
 # data loader
 var _load_thread:Thread = null
 var _load_failed:bool = false
@@ -92,6 +96,15 @@ static func get_uw1() -> GameDef:
 		"DATA/W16.TR",
 		"DATA/W64.TR",
 	]
+	# fonts
+	gd.font_files = [
+		"DATA/FONT4X5P.SYS",
+		"DATA/FONT5X6I.SYS",
+		"DATA/FONT5X6P.SYS",
+		"DATA/FONTBIG.SYS",
+		"DATA/FONTBUTN.SYS",
+		"DATA/FONTCHAR.SYS"
+	]
 	
 	return gd
 
@@ -128,6 +141,8 @@ func _load_binaries_thread():
 		steps.append(graphics_file)
 	for texture_file in texture_files:
 		steps.append(texture_file)
+	for font_file in font_files:
+		steps.append(font_file)
 	
 	_load_failed = false
 	
@@ -206,6 +221,14 @@ func _load_binaries_thread():
 			else:
 				imgarchive.archive_name = steps[current_step]
 				textures.append(imgarchive)
+		
+		# Font Files
+		elif font_files.has(steps[current_step]):
+			var newfont = UFont.load_from_binary(str(data_dir, "/", steps[current_step]))
+			if newfont == null: _load_component_fail(steps[current_step])
+			else:
+				newfont.font_name = steps[current_step]
+				fonts.append(newfont)
 		
 		# ERROR
 		else:
