@@ -1,5 +1,7 @@
 extends PanelContainer
 
+const SPRITE_SCALE:float = 2.0
+
 var palette:Palette = null
 
 var fonts:Array[UFont] = []:
@@ -27,6 +29,7 @@ func _ready():
 	fonts = fonts
 	font_index = font_index
 	%Sprite2D.texture_filter = TEXTURE_FILTER_NEAREST
+	%Sprite2D.scale = Vector2(1,1) * SPRITE_SCALE
 
 func _update_texture():
 	if is_inside_tree():
