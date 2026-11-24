@@ -3,8 +3,10 @@ class_name UFont
 var font_name:String = ""
 var space_width:int = 0
 var height:int = 0
+var h_separation:int = 1
 var max_width:int = 0
 var row_bytes:int = 0
+var row_bits:int = 0
 
 class Glyph:
 	var width:int = 0
@@ -55,5 +57,42 @@ static func load_from_binary(filepath:String) -> UFont:
 		return new_font
 	return null
 
-func create_texture(string:String) -> ImageTexture:
-	return null
+func has_lowercase() -> bool:
+	return glyphs.size() >= 127
+
+func create_texture(string:String, color_index:int) -> ImageTexture:
+	if !has_lowercase(): string = string.to_upper()
+	var w:int = 0
+	var line_width:int = 0
+	var height_space:int = height + h_separation
+	var h:int = height
+	# determine size of texture
+	for ch in string.to_ascii_buffer():
+		if ch >= 0 and ch < glyphs.size():
+			if ch == 0x0a:
+				h += height_space
+				line_width = 0
+			else:
+				line_width += glyphs[ch].width
+			if line_width > w:
+				w = line_width
+	var img:Image = Image.create(w, h, false, Image.FORMAT_RGBA8)
+	# fill with transparent
+	img.fill(Color(0, 0, 0))
+	# write font character pixels to image
+	var x_pos:int = 0
+	var y_pos:int = 0
+	var color:Color = Color(float(color_index)/255.0, 0, 0)
+	for ch in string.to_ascii_buffer():
+		if ch >= 0 and ch < glyphs.size():
+			if ch == 0x0a:
+				y_pos += height_space
+				x_pos = 0
+			else:
+				var g:Glyph = glyphs[ch]
+				for row in range(height):
+					for bit in range(g.width):
+						if g.data[row] & int(pow(2.0, bit)):
+							img.set_pixel(x_pos + (g.width - bit), y_pos + row, color)
+				x_pos += g.width
+	return ImageTexture.create_from_image(img)
